@@ -52,9 +52,9 @@ typedef struct {
 } Scanner;
 
 typedef struct {
-  TokenType type;    // Type of the token
+  TokenType type;
   const char *start; // Pointer to the start of the token in the source code
-  int lenght;        // Length of the token
+  int length;
   int line;          // Line number where the token was found
 } Token;
 

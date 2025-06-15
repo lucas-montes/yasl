@@ -91,8 +91,17 @@ static InterpretResult run(VM *vm) {
 
 InterpretResult interpret(VM* vm, const char *source) {
   Scanner scanner; //TODO: maybe remove
-  compile(&scanner, source);
-  return INTERPRET_OK;
+  Chunk chunk;
+  if (!compile(&scanner, &chunk, source)){
+    freeChunk(&chunk);
+    return INTERPRET_COMPILE_ERROR;
+  };
+  vm->chunk = &chunk;
+  vm->ip = vm->chunk->code;
+
+  InterpretResult result = run(vm);
+  freeChunk(&chunk);
+  return result;
 }
 
 void freeVM(VM *vm) {}
