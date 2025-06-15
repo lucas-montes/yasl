@@ -89,7 +89,23 @@ static void skipWhitespace(Scanner *scanner) {
   }
 }
 
+static Token string(Scanner *scanner){
+  while (peek(scanner) != '"' && !isAtEnd(scanner)) {
+    if (peek(scanner) == '\n') scanner->line++;
+    advance(scanner);
+  }
+
+  if (isAtEnd(scanner)) {
+    return errorToken(scanner, "Unterminated string.");
+  }
+
+  // The closing quote.
+  advance(scanner);
+  return makeToken(scanner, TOKEN_STRING);
+}
+
 Token scanToken(Scanner *scanner) {
+  skipWhitespace(scanner);
   scanner->start = scanner->current;
 
   if (isAtEnd(scanner)) {
@@ -132,6 +148,7 @@ Token scanToken(Scanner *scanner) {
   case '<':
     return makeToken(scanner,
                      match(scanner, '=') ? TOKEN_LESS_EQUAL : TOKEN_LESS);
+  case '"': return string(scanner);
 
     return errorToken(scanner, "Unexpected character");
   }
