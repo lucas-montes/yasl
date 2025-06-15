@@ -68,17 +68,17 @@
             testSources=$(find tests -name '*.c')
             srcSources=$(find . -maxdepth 1 -name '*.c' ! -name 'main.c')
             echo "Compiling tests..."
-            $CC -I. $srcSources $testSources -o test-runner
+            $CC -I. $srcSources $testSources -o clox-tests
           '';
 
           installPhase = ''
             mkdir -p $out/bin
-            cp test-runner $out/bin/
+            cp clox-tests $out/bin/
           '';
 
           doCheck = true;
           checkPhase = ''
-            ./test-runner
+            ./clox-tests
           '';
 
           meta = with pkgs.lib; {
