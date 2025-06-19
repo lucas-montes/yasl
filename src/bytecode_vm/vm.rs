@@ -1,28 +1,26 @@
-use super::{chunk::Chunk, values::Value};
+use super::{chunk::Chunk};
 
 const STACK_MAX: usize = 256;
 
-pub struct Vm {
+pub struct Vm<T> {
     //TODO: we'll need either pointers, usize to point to the location or refs
-    chunk: Chunk<Value>,
-    ip: u8,                            // NOTE: this is a pointer to the values in the chunk
-    stack: Vec<Value> //TODO: use maybeuninit
+    chunk: Chunk<T>,
+    stack: Vec<T> //TODO: use maybeuninit
 }
 
-impl Vm {
-    pub fn new(chunk: Chunk<Value>) -> Self {
+impl<T> Vm<T> {
+    pub fn new(chunk: Chunk<T>) -> Self {
         Self {
             chunk,
-            ip: 0,
             stack: Vec::with_capacity(STACK_MAX),
         }
     }
-    fn pop(&mut self) -> Option<Value> {
+    fn pop(&mut self) -> Option<T> {
         self.stack.pop()
     }
-    fn push(&mut self, value: Value) {
+    fn push(&mut self, value: T) {
         self.stack.push(value)
     }
     fn run(&mut self){}
-    pub fn interpret(&mut self, chunk: Chunk<Value>){}
+    pub fn interpret(&mut self, chunk: Chunk<T>){}
 }

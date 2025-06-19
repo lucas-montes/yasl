@@ -8,7 +8,7 @@ void test_scanner_plus() {
     initScanner(&scanner, "+");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_PLUS);
-    assert(token.lenght == 1);
+    assert(token.length == 1);
     assert(scanner.line == 1);
 }
 
@@ -17,7 +17,7 @@ void test_scanner_whitespace() {
     initScanner(&scanner, "   +   ");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_PLUS);
-    assert(token.lenght == 1);
+    assert(token.length == 1);
     assert(scanner.line == 1);
 }
 void test_scanner_comments() {
@@ -25,7 +25,7 @@ void test_scanner_comments() {
     initScanner(&scanner, "// This is a comment\n+");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_PLUS);
-    assert(token.lenght == 1);
+    assert(token.length == 1);
     assert(scanner.line == 2);
 }
 void test_scanner_multiline_comments() {
@@ -33,7 +33,7 @@ void test_scanner_multiline_comments() {
     initScanner(&scanner, "/* This is a\nmultiline comment */ +");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_PLUS);
-    assert(token.lenght == 1);
+    assert(token.length == 1);
     assert(scanner.line == 2);
 }
 
@@ -42,7 +42,7 @@ void test_scanner_string() {
     initScanner(&scanner, "\"Hello, World!\"");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_STRING);
-    assert(token.lenght == 15); //it have to include the quotes
+    assert(token.length == 15); //it have to include the quotes
     assert(scanner.line == 1);
 }
 
@@ -58,7 +58,7 @@ void test_this() {
     initScanner(&scanner, "this");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_THIS);
-    assert(token.lenght == 4);
+    assert(token.length == 4);
     assert(scanner.line == 1);
 }
 
@@ -67,7 +67,7 @@ void test_else() {
     initScanner(&scanner, "else");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_ELSE);
-    assert(token.lenght == 4);
+    assert(token.length == 4);
     assert(scanner.line == 1);
 }
 void test_scanner_identifier() {
@@ -75,7 +75,7 @@ void test_scanner_identifier() {
     initScanner(&scanner, "myVariable");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_IDENTIFIER);
-    assert(token.lenght == 10);
+    assert(token.length == 10);
     assert(scanner.line == 1);
 }
 void test_scanner_number() {
@@ -83,7 +83,7 @@ void test_scanner_number() {
     initScanner(&scanner, "12345");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_NUMBER);
-    assert(token.lenght == 5);
+    assert(token.length == 5);
     assert(scanner.line == 1);
 }
 void test_scanner_number_with_decimal() {
@@ -91,7 +91,7 @@ void test_scanner_number_with_decimal() {
     initScanner(&scanner, "123.45");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_NUMBER);
-    assert(token.lenght == 6);
+    assert(token.length == 6);
     assert(scanner.line == 1);
 }
 void test_scanner_number_with_leading_zero() {
@@ -99,7 +99,7 @@ void test_scanner_number_with_leading_zero() {
     initScanner(&scanner, "0123");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_NUMBER);
-    assert(token.lenght == 4);
+    assert(token.length == 4);
     assert(scanner.line == 1);
 }
 void test_scanner_number_with_leading_zero_decimal() {
@@ -107,7 +107,7 @@ void test_scanner_number_with_leading_zero_decimal() {
     initScanner(&scanner, "0.123");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_NUMBER);
-    assert(token.lenght == 5);
+    assert(token.length == 5);
     assert(scanner.line == 1);
 }
 
@@ -116,7 +116,7 @@ void test_for() {
     initScanner(&scanner, "for");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_FOR);
-    assert(token.lenght == 3);
+    assert(token.length == 3);
     assert(scanner.line == 1);
 }
 void test_if() {
@@ -124,7 +124,7 @@ void test_if() {
     initScanner(&scanner, "if");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_IF);
-    assert(token.lenght == 2);
+    assert(token.length == 2);
     assert(scanner.line == 1);
 }
 void test_and() {
@@ -132,7 +132,7 @@ void test_and() {
     initScanner(&scanner, "and");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_AND);
-    assert(token.lenght == 3);
+    assert(token.length == 3);
     assert(scanner.line == 1);
 }
 void test_or() {
@@ -140,7 +140,7 @@ void test_or() {
     initScanner(&scanner, "or");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_OR);
-    assert(token.lenght == 2);
+    assert(token.length == 2);
     assert(scanner.line == 1);
 }
 void test_nill() {
@@ -148,7 +148,7 @@ void test_nill() {
     initScanner(&scanner, "nil");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_NIL);
-    assert(token.lenght == 3);
+    assert(token.length == 3);
     assert(scanner.line == 1);
 }
 void test_class() {
@@ -156,7 +156,7 @@ void test_class() {
     initScanner(&scanner, "class");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_CLASS);
-    assert(token.lenght == 5);
+    assert(token.length == 5);
     assert(scanner.line == 1);
 }
 void test_return() {
@@ -164,7 +164,7 @@ void test_return() {
     initScanner(&scanner, "return");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_RETURN);
-    assert(token.lenght == 6);
+    assert(token.length == 6);
     assert(scanner.line == 1);
 }
 void test_print() {
@@ -172,7 +172,7 @@ void test_print() {
     initScanner(&scanner, "print");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_PRINT);
-    assert(token.lenght == 5);
+    assert(token.length == 5);
     assert(scanner.line == 1);
 }
 void test_super() {
@@ -180,7 +180,7 @@ void test_super() {
     initScanner(&scanner, "super");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_SUPER);
-    assert(token.lenght == 5);
+    assert(token.length == 5);
     assert(scanner.line == 1);
 }
 void test_true() {
@@ -188,7 +188,7 @@ void test_true() {
     initScanner(&scanner, "true");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_TRUE);
-    assert(token.lenght == 4);
+    assert(token.length == 4);
     assert(scanner.line == 1);
 }
 void test_false() {
@@ -196,7 +196,7 @@ void test_false() {
     initScanner(&scanner, "false");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_FALSE);
-    assert(token.lenght == 5);
+    assert(token.length == 5);
     assert(scanner.line == 1);
 }
 void test_var() {
@@ -204,7 +204,7 @@ void test_var() {
     initScanner(&scanner, "var");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_VAR);
-    assert(token.lenght == 3);
+    assert(token.length == 3);
     assert(scanner.line == 1);
 }
 void test_while() {
@@ -212,7 +212,7 @@ void test_while() {
     initScanner(&scanner, "while");
     Token token = scanToken(&scanner);
     assert(token.type == TOKEN_WHILE);
-    assert(token.lenght == 5);
+    assert(token.length == 5);
     assert(scanner.line == 1);
 }
 

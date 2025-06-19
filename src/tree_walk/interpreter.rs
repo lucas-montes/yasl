@@ -282,3 +282,121 @@ impl Interpreter {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_interpreter_evaluate() {
+        let mut interpreter = Interpreter::default();
+        let expr = Expr::Binary(
+            Box::new(Expr::Literal(Literal::Number(5.0))),
+            BinaryOperator::Plus,
+            Box::new(Expr::Literal(Literal::Number(3.0))),
+        );
+        let result = interpreter.evaluate_expression(&expr).unwrap();
+        assert_eq!(result, Literal::Number(8.0));
+    }
+
+    #[test]
+    fn test_interpreter_evaluate_division_by_zero() {
+        let mut interpreter = Interpreter::default();
+        let expr = Expr::Binary(
+            Box::new(Expr::Literal(Literal::Number(5.0))),
+            BinaryOperator::Slash,
+            Box::new(Expr::Literal(Literal::Number(0.0))),
+        );
+        let result = interpreter.evaluate_expression(&expr);
+        assert!(matches!(result, Err(InterpreterError::DivisionByZero)));
+    }
+    #[test]
+    fn test_interpreter_evaluate_logical_or() {
+        let mut interpreter = Interpreter::default();
+        let expr = Expr::Logical(
+            Box::new(Expr::Literal(Literal::False)),
+            LogicalOperator::Or,
+            Box::new(Expr::Literal(Literal::True)),
+        );
+        let result = interpreter.evaluate_expression(&expr).unwrap();
+        assert_eq!(result, Literal::True);
+    }
+    #[test]
+    fn test_interpreter_evaluate_logical_and() {
+        let mut interpreter = Interpreter::default();
+        let expr = Expr::Logical(
+            Box::new(Expr::Literal(Literal::True)),
+            LogicalOperator::And,
+            Box::new(Expr::Literal(Literal::False)),
+        );
+        let result = interpreter.evaluate_expression(&expr).unwrap();
+        assert_eq!(result, Literal::False);
+    }
+    #[test]
+    fn test_interpreter_evaluate_logical_not() {
+        let mut interpreter = Interpreter::default();
+        let expr = Expr::Unary(
+            UnaryOperator::Bang,
+            Box::new(Expr::Literal(Literal::True)),
+        );
+        let result = interpreter.evaluate_expression(&expr).unwrap();
+        assert_eq!(result, Literal::False);
+    }
+    #[test]
+    fn test_interpreter_evaluate_function_call() {
+        let mut interpreter = Interpreter::default();
+        let expr = Expr::Call(
+            Box::new(Expr::Variable("clock".into())),
+            vec![],
+        );
+        let result = interpreter.evaluate_expression(&expr).unwrap();
+        assert!(matches!(result, Literal::Number(_)));
+    }
+    #[test]
+    fn test_interpreter_evaluate_function_call_with_args() {
+        let mut interpreter = Interpreter::default();
+        let expr = Expr::Call(
+            Box::new(Expr::Variable("clock".into())),
+            vec![Expr::Literal(Literal::Number(1.0))],
+        );
+        let result = interpreter.evaluate_expression(&expr);
+        assert!(matches!(result, Err(InterpreterError::WrongArgumentsForFunction)));
+    }
+    #[test]
+    fn test_interpreter_evaluate_function_call_with_wrong_type() {
+        let mut interpreter = Interpreter::default();
+        let expr = Expr::Call(
+            Box::new(Expr::Literal(Literal::Number(42.0))),
+            vec![],
+        );
+        let result = interpreter.evaluate_expression(&expr);
+        assert!(matches!(result, Err(InterpreterError::ValueIsNotCallable)));
+    }
+
+    #[test]
+    fn test_interpreter_evaluate_function_definition_and_call() {
+        let mut interpreter = Interpreter::default();
+        let function_def = Stmt::Function(
+            "myFunction".into(),
+            vec!["arg1".into(), "arg2".into()],
+            vec![Stmt::Return(Some(Expr::Binary(
+                Box::new(Expr::Variable("arg1".into())),
+                BinaryOperator::Plus,
+                Box::new(Expr::Variable("arg2".into())),
+            )))],
+        );
+        let result =interpreter.evaluate_statement(function_def).unwrap();
+        assert!(matches!(result, ControlFlow::Continue(Literal::Nil)));
+
+        let call_expr = Expr::Call(
+            Box::new(Expr::Variable("myFunction".into())),
+            vec![
+                Expr::Literal(Literal::Number(5.0)),
+                Expr::Literal(Literal::Number(3.0)),
+            ],
+        );
+        let result = interpreter.evaluate_expression(&call_expr).unwrap();
+        assert_eq!(result, Literal::Number(8.0));
+    }
+
+}
