@@ -90,6 +90,7 @@ static InterpretResult run(VM *vm) {
 }
 
 InterpretResult interpret(VM* vm, const char *source) {
+  printf("interpreter called\n");
   Scanner scanner; //TODO: maybe remove
   Chunk chunk;
   if (!compile(&scanner, &chunk, source)){

@@ -1,22 +1,14 @@
-use std::ops::{Deref, DerefMut};
-
 pub enum Opcode<T> {
-    Value(T),
-    OpReturn, // Return from the current function
+    Constant(T),
+    Return, // Return from the current function
+Negate,
+    Add,
+    Subtract,
+    Multiply,
+    Divide,
 }
 
-pub struct Chunk<T>(Vec<Opcode<T>>);
-
-impl<T> Deref for Chunk<T> {
-    type Target = Vec<Opcode<T>>;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-impl<T> DerefMut for Chunk<T> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.0
-    }
+pub struct Chunk<T>{
+    code: Vec<Opcode<T>>,
+    lines: Vec<usize>,
 }
