@@ -1,7 +1,8 @@
 use std::io::{self, Write};
 use std::{fmt::Display, path::PathBuf};
 
-use yasl::tree_walk::{Interpreter, Parser, Scanner};
+use yasl::scan::Scanner;
+use yasl::tree_walk::{Interpreter, Parser};
 
 enum Command {
     Exit,

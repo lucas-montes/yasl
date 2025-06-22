@@ -3,7 +3,9 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
-use super::{syntax_tree::Literal, tokens::TokenLexem};
+use crate::scan::TokenLexem;
+
+use super::{syntax_tree::Literal};
 
 #[derive(Default, Debug)]
 pub struct InternalEnv(HashMap<TokenLexem, Literal>);

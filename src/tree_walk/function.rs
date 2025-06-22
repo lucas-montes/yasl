@@ -1,8 +1,10 @@
+use crate::scan::TokenLexem;
+
 use super::{
     Interpreter,
     interpreter::InterpreterResult,
     syntax_tree::{Callable, Literal, Stmt},
-    tokens::TokenLexem,
+
 };
 
 #[derive(Debug, Clone)]
