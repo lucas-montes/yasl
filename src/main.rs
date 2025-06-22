@@ -1,8 +1,8 @@
 use std::io::{self, Write};
 use std::{fmt::Display, path::PathBuf};
 
-use yasl::scan::Scanner;
-use yasl::tree_walk::{Interpreter, Parser};
+use scan::Scanner;
+use tree_walk::{Interpreter, Parser};
 
 enum Command {
     Exit,
@@ -92,14 +92,25 @@ fn read_and_concatenate_files(paths: &[PathBuf]) -> String {
 }
 
 fn main() {
-    let paths: Vec<PathBuf> = std::env::args().skip(1).map(PathBuf::from).collect();
+    let mut args = std::env::args().skip(1);
+    let interpreter_mode = args.next().unwrap_or(String::from("tree"));
+
+    let paths: Vec<PathBuf> = args.map(PathBuf::from).collect();
+
+    if interpreter_mode != "tree" {
+        //TODO: replace with the vm based one
+        eprintln!("Unknown interpreter mode: {}", interpreter_mode);
+        eprintln!("Usage: yasl [tree] [file1] [file2] ...");
+        return;
+    }
 
     if paths.is_empty() {
         interactive();
     } else {
         let input = read_and_concatenate_files(&paths);
-        let mut inter = Interpreter::default();
         let scan = Scanner::new(&input).scan();
+
+        let mut inter = Interpreter::default();
         if let Some(scan_errors) = scan.errors() {
             eprintln!("error scanning {:?}", &scan_errors);
             return;

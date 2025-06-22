@@ -1,7 +1,7 @@
 use crate::benchmarks::{config, helper};
 
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
-use yasl::scan::Scanner;
+use scan::Scanner;
 
 
 fn bench(c: &mut Criterion) {

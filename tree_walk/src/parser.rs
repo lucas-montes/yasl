@@ -1,5 +1,5 @@
 use std::ops::Not;
-use crate::scan::{Token, TokenLexem, TokenType};
+use scan::{Token, TokenLexem, TokenType};
 
 use super::{
     syntax_tree::{Expr, Literal, Stmt},

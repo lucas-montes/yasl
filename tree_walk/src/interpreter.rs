@@ -3,7 +3,7 @@ use std::{
     time::{SystemTime, UNIX_EPOCH},
 };
 
-use crate::scan::TokenLexem;
+use scan::TokenLexem;
 
 use super::{
     environment::Environment,

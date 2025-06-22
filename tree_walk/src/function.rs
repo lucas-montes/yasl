@@ -1,4 +1,4 @@
-use crate::scan::TokenLexem;
+use scan::TokenLexem;
 
 use super::{
     Interpreter,

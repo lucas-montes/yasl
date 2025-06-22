@@ -727,6 +727,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "scan"
+version = "0.1.0"
+
+[[package]]
 name = "scopeguard"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -866,6 +870,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "tree_walk"
+version = "0.1.0"
+dependencies = [
+ "scan",
+]
+
+[[package]]
 name = "unicode-ident"
 version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -886,6 +897,13 @@ name = "version_check"
 version = "0.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
+
+[[package]]
+name = "virtual_machine"
+version = "0.1.0"
+dependencies = [
+ "scan",
+]
 
 [[package]]
 name = "walkdir"
@@ -1093,6 +1111,9 @@ version = "0.1.0"
 dependencies = [
  "criterion",
  "pprof",
+ "scan",
+ "tree_walk",
+ "virtual_machine",
 ]
 
 [[package]]
