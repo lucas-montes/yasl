@@ -1,11 +1,8 @@
+use super::{Interpreter, interpreter::InterpreterResult};
+use scan::{Token, TokenLexem, TokenType};
 use std::{
     fmt::{Debug, Display},
     rc::Rc,
-};
-use scan::{Token, TokenLexem, TokenType};
-use super::{
-    Interpreter,
-    interpreter::InterpreterResult,
 };
 
 #[derive(Debug, PartialEq, Clone)]

@@ -4,7 +4,6 @@ use super::{
     Interpreter,
     interpreter::InterpreterResult,
     syntax_tree::{Callable, Literal, Stmt},
-
 };
 
 #[derive(Debug, Clone)]

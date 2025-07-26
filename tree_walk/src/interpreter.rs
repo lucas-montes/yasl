@@ -336,20 +336,14 @@ mod tests {
     #[test]
     fn test_interpreter_evaluate_logical_not() {
         let mut interpreter = Interpreter::default();
-        let expr = Expr::Unary(
-            UnaryOperator::Bang,
-            Box::new(Expr::Literal(Literal::True)),
-        );
+        let expr = Expr::Unary(UnaryOperator::Bang, Box::new(Expr::Literal(Literal::True)));
         let result = interpreter.evaluate_expression(&expr).unwrap();
         assert_eq!(result, Literal::False);
     }
     #[test]
     fn test_interpreter_evaluate_function_call() {
         let mut interpreter = Interpreter::default();
-        let expr = Expr::Call(
-            Box::new(Expr::Variable("clock".into())),
-            vec![],
-        );
+        let expr = Expr::Call(Box::new(Expr::Variable("clock".into())), vec![]);
         let result = interpreter.evaluate_expression(&expr).unwrap();
         assert!(matches!(result, Literal::Number(_)));
     }
@@ -361,15 +355,15 @@ mod tests {
             vec![Expr::Literal(Literal::Number(1.0))],
         );
         let result = interpreter.evaluate_expression(&expr);
-        assert!(matches!(result, Err(InterpreterError::WrongArgumentsForFunction)));
+        assert!(matches!(
+            result,
+            Err(InterpreterError::WrongArgumentsForFunction)
+        ));
     }
     #[test]
     fn test_interpreter_evaluate_function_call_with_wrong_type() {
         let mut interpreter = Interpreter::default();
-        let expr = Expr::Call(
-            Box::new(Expr::Literal(Literal::Number(42.0))),
-            vec![],
-        );
+        let expr = Expr::Call(Box::new(Expr::Literal(Literal::Number(42.0))), vec![]);
         let result = interpreter.evaluate_expression(&expr);
         assert!(matches!(result, Err(InterpreterError::ValueIsNotCallable)));
     }
@@ -386,7 +380,7 @@ mod tests {
                 Box::new(Expr::Variable("arg2".into())),
             )))],
         );
-        let result =interpreter.evaluate_statement(function_def).unwrap();
+        let result = interpreter.evaluate_statement(function_def).unwrap();
         assert!(matches!(result, ControlFlow::Continue(Literal::Nil)));
 
         let call_expr = Expr::Call(
@@ -399,5 +393,4 @@ mod tests {
         let result = interpreter.evaluate_expression(&call_expr).unwrap();
         assert_eq!(result, Literal::Number(8.0));
     }
-
 }

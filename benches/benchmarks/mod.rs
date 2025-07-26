@@ -1,7 +1,6 @@
 mod helper;
 pub mod tree_walk;
 
-
 mod config {
     use criterion::{BenchmarkGroup, Criterion, measurement::WallTime};
     #[cfg(not(target_os = "windows"))]
