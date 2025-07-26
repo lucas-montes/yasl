@@ -1,6 +1,6 @@
 #include "vm.h"
-#include "compiler.h"
 #include "chunk.h"
+#include "compiler.h"
 #include "debug.h"
 #include "value.h"
 #include <stdio.h>
@@ -89,11 +89,11 @@ static InterpretResult run(VM *vm) {
 #undef BINARY_OP
 }
 
-InterpretResult interpret(VM* vm, const char *source) {
-  printf("interpreter called\n");
-  Scanner scanner; //TODO: maybe remove
+InterpretResult interpret(VM *vm, const char *source) {
+  Scanner scanner; // TODO: maybe remove
   Chunk chunk;
-  if (!compile(&scanner, &chunk, source)){
+  initChunk(&chunk);
+  if (!compile(&scanner, &chunk, source)) {
     freeChunk(&chunk);
     return INTERPRET_COMPILE_ERROR;
   };

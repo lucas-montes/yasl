@@ -72,11 +72,9 @@ static void consume(Parser *parser, Scanner *scanner, TokenType type,
   errorAtCurrent(parser, message);
 }
 
-
 // TODO: maybe chunk should be the current chunk
-static void emitByte(Parser *parser, Chunk *chunk, uint8_t byte) {
-  printf("emitByte called\n");
-  writeChunk(chunk, byte, parser->previous.line);
+static void emitByte(Parser *parser, Chunk *chunk, uint8_t op) {
+  writeChunk(chunk, op, parser->previous.line);
 }
 
 static void emitReturn(Parser *parser, Chunk *chunk) {
@@ -93,23 +91,18 @@ static void endCompiler(Parser *parser, Chunk *chunk) {
 #endif
 }
 
-static void emitBytes(Parser *parser, Chunk *chunk, uint8_t byte1,
-                      uint8_t byte2) {
-                        printf("emitBytes called\n");
-  printf("byte1: %d, byte2: %d\n", byte1, byte2);
-  emitByte(parser, chunk, byte1);
-  emitByte(parser, chunk, byte2);
+static void emitBytes(Parser *parser, Chunk *chunk, uint8_t op1, uint8_t op2) {
+  emitByte(parser, chunk, op1);
+  emitByte(parser, chunk, op2);
 }
 
 static uint8_t makeConstant(Value value, Parser *parser, Chunk *chunk) {
-  printf("makeConstant called\n");
   size_t constantIndex = addConstant(chunk, value);
   // TODO: we might not need this
   if (constantIndex > UINT8_MAX) {
     error(parser, "Too many constants in one chunk.");
     return 0;
   }
-  printf("constantIndex: %zu\n", constantIndex);
   return (uint8_t)constantIndex;
 }
 
@@ -118,13 +111,9 @@ static void emitConstant(Value value, Parser *parser, Chunk *chunk) {
 }
 
 static void number(Parser *parser, Scanner *scanner, Chunk *chunk) {
-  printf("number called\n");
   double value = strtod(parser->previous.start, NULL);
-  printf("Parsed number: %f\n", value);
   emitConstant(value, parser, chunk);
-  printf("emitConstant called\n");
 }
-
 
 typedef void (*ParseFn)(Parser *parser, Scanner *scanner, Chunk *chunk);
 
@@ -139,33 +128,21 @@ static ParseRule *getRule(TokenType type);
 
 static void parsePrecedence(Parser *parser, Scanner *scanner, Chunk *chunk,
                             Precedence precedence) {
-  printf("parsePrecedence called\n");
-  printf("precedence: %d\n", precedence);
   advance(parser, scanner);
-  printf("advance called\n");
 
   ParseFn prefixRule = getRule(parser->previous.type)->prefix;
-  printf("prefixRule: %p\n", (void *)prefixRule);
   if (prefixRule == NULL) {
-    printf("prefixRule is NULL\n");
     error(parser, "Expect expression.");
     return;
   }
-
-  printf("prefixRule is not NULL\n");
   prefixRule(parser, scanner, chunk);
 
-  printf("prefixRule called\n");
   while (precedence <= getRule(parser->current.type)->precedence) {
-    printf("while loop in parsePrecedence\n");
     advance(parser, scanner);
-    printf("advance called in while loop\n");
     ParseFn infixRule = getRule(parser->previous.type)->infix;
     infixRule(parser, scanner, chunk);
-    printf("infixRule called\n");
   }
 }
-
 
 static void binary(Parser *parser, Scanner *scanner, Chunk *chunk) {
   TokenType operatorType = parser->previous.type;
@@ -191,7 +168,6 @@ static void binary(Parser *parser, Scanner *scanner, Chunk *chunk) {
 }
 
 static void expression(Parser *parser, Scanner *scanner, Chunk *chunk) {
-  printf("expression called\n");
   parsePrecedence(parser, scanner, chunk, PREC_ASSIGNMENT);
 }
 
@@ -259,19 +235,15 @@ ParseRule rules[] = {[TOKEN_LEFT_PAREN] = {grouping, NULL, PREC_NONE},
 static ParseRule *getRule(TokenType type) { return &rules[type]; }
 
 bool compile(Scanner *scanner, Chunk *chunk, const char *source) {
-  printf("compile called\n");
   Parser parser;
   initScanner(scanner, source);
   parser.hadError = false;
   parser.panicMode = false;
-  printf("start\n");
   advance(&parser, scanner);
-  printf("advance called\n");
+
   expression(&parser, scanner, chunk);
-  printf("expression called\n");
   consume(&parser, scanner, TOKEN_EOF, "Expect end of file.");
-  printf("consume called\n");
+
   endCompiler(&parser, chunk);
-  printf("endCompiler called\n");
   return !parser.hadError;
 }

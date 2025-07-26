@@ -12,11 +12,7 @@ void initChunk(Chunk *chunk) {
 }
 
 size_t addConstant(Chunk *chunk, Value value) {
-  printf("addConstant called\n");
   writeValueArray(&chunk->constants, value);
-  printf("Value added to constants: ");
-  printValue(value);
-  printf("\n");
   return chunk->constants.count - 1;
 }
 
