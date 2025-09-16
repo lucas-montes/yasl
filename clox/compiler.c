@@ -72,7 +72,6 @@ static void consume(Parser *parser, Scanner *scanner, TokenType type,
   errorAtCurrent(parser, message);
 }
 
-// TODO: maybe chunk should be the current chunk
 static void emitByte(Parser *parser, Chunk *chunk, uint8_t op) {
   writeChunk(chunk, op, parser->previous.line);
 }
