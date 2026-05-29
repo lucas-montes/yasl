@@ -10,7 +10,7 @@ static void resetStack(VM *vm) { vm->stackTop = vm->stack; }
 void initVM(VM *vm) { resetStack(vm); }
 
 void pushVM(VM *vm, Value value) {
-  // NOTE: ponter magic. The stacktop points to the location in the array, so
+  // NOTE: pointer magic. The stacktop points to the location in the array, so
   // when we set the value in puts it in the array
   // then when we increase stacktop, we are move the pointer to the next
   // location

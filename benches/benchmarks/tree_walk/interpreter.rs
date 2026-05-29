@@ -1,10 +1,7 @@
 use crate::benchmarks::{config, helper};
 
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
-use {
-    scan::Scanner,
-    tree_walk::{Interpreter, Parser},
-};
+use tree_walk::{Interpreter, Parser, Scanner};
 
 fn interpret(input: &str) {
     let mut inter = Interpreter::default();

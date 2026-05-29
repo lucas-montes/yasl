@@ -1,6 +1,4 @@
-use crate::chunk::Opcode;
-
-use super::chunk::Chunk;
+use super::chunk::{Chunk, Opcode};
 
 const STACK_MAX: usize = 256;
 
@@ -73,6 +71,7 @@ where
     where
         F: FnOnce(T, T) -> T,
     {
+        //TODO: maybe we could expect them to exist
         if let (Some(b), Some(a)) = (self.stack.pop(), self.stack.pop()) {
             self.stack.push(op(a, b));
         } else {

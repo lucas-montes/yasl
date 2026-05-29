@@ -6,7 +6,6 @@ edition = "2024"
 [dependencies]
 virtual_machine = {version = "0.1.0", path = "virtual_machine"}
 tree_walk = {version = "0.1.0", path = "tree_walk"}
-scan.workspace = true
 
 [dev-dependencies]
 criterion = { version = "0.5.1", features = ["html_reports", "plotters"] }
@@ -17,11 +16,8 @@ name = "bench_tree_walk"
 harness = false
 
 [workspace.dependencies]
-scan = {version = "0.1.0", path = "scan"}
-
 [workspace]
 members = [
-    "scan",
     "tree_walk",
     "virtual_machine",
 ]

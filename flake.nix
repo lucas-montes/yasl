@@ -2,31 +2,36 @@
   description = "Yasl";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     rust-overlay.url = "github:oxalica/rust-overlay";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    rust-overlay,
-    flake-utils,
-    ...
-  }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      rust-overlay,
+      flake-utils,
+      ...
+    }:
     flake-utils.lib.eachDefaultSystem (
-      system: let
-        overlays = [(import rust-overlay)];
+      system:
+      let
+        overlays = [ (import rust-overlay) ];
         pkgs = import nixpkgs {
           inherit system overlays;
         };
         rust-bin-custom = pkgs.rust-bin.stable.latest.default.override {
-          extensions = ["rust-src"];
+          extensions = [
+            "rust-src"
+            "rust-analyzer"
+          ];
         };
-      in {
+      in
+      {
         devShells.default = pkgs.mkShell {
           buildInputs = [
-            pkgs.nushell
             pkgs.pkg-config
             rust-bin-custom
           ];
@@ -36,7 +41,7 @@
           pname = "clox";
           version = "0.1";
           src = ./clox;
-          buildInputs = [pkgs.gcc];
+          buildInputs = [ pkgs.gcc ];
 
           buildPhase = ''
             cSources=$(find . -maxdepth 1 -name '*.c' -print);
@@ -53,7 +58,7 @@
           meta = with pkgs.lib; {
             description = "C project clox";
             license = licenses.mit;
-            maintainers = ["Lucas"];
+            maintainers = [ "Lucas" ];
           };
         };
 
@@ -62,7 +67,7 @@
           version = "0.1";
           src = ./clox;
 
-          buildInputs = [pkgs.gcc];
+          buildInputs = [ pkgs.gcc ];
 
           buildPhase = ''
             testSources=$(find tests -name '*.c')

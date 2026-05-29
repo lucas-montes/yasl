@@ -3,12 +3,11 @@ use std::{
     time::{SystemTime, UNIX_EPOCH},
 };
 
-use scan::TokenLexem;
-
 use super::{
     environment::Environment,
     function::Function,
     syntax_tree::{BinaryOperator, Callable, Expr, Literal, LogicalOperator, Stmt, UnaryOperator},
+    tokens::TokenLexem,
 };
 
 #[derive(Debug)]

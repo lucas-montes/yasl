@@ -1,7 +1,4 @@
-#include "common.h"
-#include "debug.h"
 #include "vm.h"
-#include "chunk.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

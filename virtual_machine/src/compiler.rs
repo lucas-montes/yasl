@@ -1,8 +1,10 @@
 use std::marker::PhantomData;
 
-use scan::{Scanner, Token};
-
-use crate::chunk::{Chunk, Opcode};
+use super::{
+    chunk::{Chunk, Opcode},
+    scanner::Scanner,
+    tokens::Token,
+};
 
 pub enum Precedence {
     None,
@@ -17,7 +19,6 @@ pub enum Precedence {
     Call,       // . ()
     Primary,
 }
-
 
 type ParserResult<T> = Result<Opcode<T>, ParserError>;
 
@@ -51,7 +52,7 @@ impl<'a, T> Parser<'a, T> {
         }
     }
 
-    fn parse_precedence(&mut self, precedence: Precedence){}
+    fn parse_precedence(&mut self, precedence: Precedence) {}
 }
 
 impl<'a, T> Iterator for Parser<'a, T> {
@@ -61,7 +62,6 @@ impl<'a, T> Iterator for Parser<'a, T> {
         let current = self.inner.next();
         None
     }
-
 }
 
 pub fn compile<T>(scanner: Scanner, chunk: &mut Chunk<T>) {

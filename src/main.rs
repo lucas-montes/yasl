@@ -1,8 +1,7 @@
 use std::io::{self, Write};
 use std::{fmt::Display, path::PathBuf};
 
-use scan::Scanner;
-use tree_walk::{Interpreter, Parser};
+use tree_walk::{Interpreter, Parser, Scanner};
 
 enum Command {
     Exit,
@@ -97,10 +96,9 @@ fn main() {
 
     let paths: Vec<PathBuf> = args.map(PathBuf::from).collect();
 
-    if interpreter_mode != "tree" {
-        //TODO: replace with the vm based one
+    if !matches!(interpreter_mode.as_ref(), "tree" | "vm") {
         eprintln!("Unknown interpreter mode: {}", interpreter_mode);
-        eprintln!("Usage: yasl [tree] [file1] [file2] ...");
+        eprintln!("Usage: yasl [tree | vm] [file1] [file2] ...");
         return;
     }
 

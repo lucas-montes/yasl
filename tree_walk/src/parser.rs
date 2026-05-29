@@ -1,7 +1,9 @@
-use scan::{Token, TokenLexem, TokenType};
 use std::ops::Not;
 
-use super::syntax_tree::{Expr, Literal, Stmt};
+use super::{
+    syntax_tree::{Expr, Literal, Stmt},
+    tokens::{Token, TokenLexem, TokenType},
+};
 
 #[derive(Default, Debug)]
 pub struct Parser {

@@ -15,7 +15,6 @@ impl std::ops::Neg for Value {
     fn neg(self) -> Self::Output {
         Value(-self.0)
     }
-
 }
 
 impl std::ops::Sub for Value {

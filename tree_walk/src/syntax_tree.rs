@@ -1,5 +1,9 @@
-use super::{Interpreter, interpreter::InterpreterResult};
-use scan::{Token, TokenLexem, TokenType};
+use super::{
+    Interpreter,
+    interpreter::InterpreterResult,
+    tokens::{Token, TokenLexem, TokenType},
+};
+
 use std::{
     fmt::{Debug, Display},
     rc::Rc,

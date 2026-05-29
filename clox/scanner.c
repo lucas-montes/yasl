@@ -1,5 +1,5 @@
 #include "scanner.h"
-#include "common.h"
+#include <stdbool.h>
 #include <string.h>
 
 void initScanner(Scanner *scanner, const char *source) {
