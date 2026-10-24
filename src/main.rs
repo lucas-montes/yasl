@@ -26,6 +26,7 @@ impl Command {
             Self::Exit => {
                 std::process::exit(0);
             }
+
             Self::Run(v) => {
                 let scan = Scanner::new(&v).scan();
                 if let Some(scan_errors) = scan.errors() {
@@ -51,7 +52,7 @@ impl Display for Command {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Run(c) => {
-                write!(f, "{}", c)
+                write!(f, "{c}")
             }
             _ => Err(std::fmt::Error),
         }

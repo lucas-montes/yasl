@@ -60,6 +60,8 @@ impl Default for Interpreter {
 
 pub type InterpreterFastResult = Result<ControlFlow<Literal, Literal>, InterpreterError>;
 
+//TODO: check <https://doc.rust-lang.org/std/keyword.become.html>
+
 impl Interpreter {
     pub fn evaluate(&mut self, stmt: Stmt) -> InterpreterFastResult {
         self.evaluate_statement(stmt)

@@ -1,5 +1,4 @@
-use scan::Scanner;
-use virtual_machine::{chunk::Chunk, compiler::compile, values::Value, vm::Vm};
+use virtual_machine::{Chunk, compile, Value, Scanner, Vm};
 
 fn main() {
     let source = "var a = 1;";

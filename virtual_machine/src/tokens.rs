@@ -42,31 +42,18 @@ pub enum TokenType {
     This,
     Var,
     While,
+    Error, //TODO: not sure we need it
     Eof,
 }
 
-#[derive(Debug, PartialEq, Clone, Eq, Hash)]
-pub struct TokenLexem(Rc<str>);
-
-impl Display for TokenLexem {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
-    }
-}
-
-impl From<&str> for TokenLexem {
-    fn from(value: &str) -> Self {
-        Self(Rc::from(value))
-    }
-}
-
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Token<'a> {
     kind: TokenType,
-    lexem: &'a str,
+    lexem: &'a str, //NOTE: this replace the start + lenght in c
     line: u64,
 }
 
+//NOTE: used for tests
 impl<'a> PartialEq for Token<'a> {
     fn eq(&self, other: &Self) -> bool {
         self.kind == other.kind && self.lexem == other.lexem && self.line == other.line

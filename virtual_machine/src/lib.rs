@@ -1,7 +1,13 @@
-pub mod chunk;
-pub mod compiler;
-pub mod memory;
+mod chunk;
+mod compiler;
+mod memory;
 mod scanner;
 mod tokens;
-pub mod values;
-pub mod vm;
+mod values;
+mod vm;
+
+pub use compiler::compile;
+pub use chunk::Chunk;
+pub use vm::Vm;
+pub use scanner::Scanner;
+pub use values::Value;
